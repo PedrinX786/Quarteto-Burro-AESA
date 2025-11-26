@@ -1,0 +1,456 @@
+CREATE DATABASE creche_pequeno_mundo;
+USE creche_pequeno_mundo;
+
+CREATE TABLE endereco (
+    id_endereco INT AUTO_INCREMENT PRIMARY KEY,
+    rua VARCHAR(80),
+    numero VARCHAR(10),
+    bairro VARCHAR(50),
+    cidade VARCHAR(50),
+    estado CHAR(2)
+);
+
+CREATE TABLE turma (
+    id_turma INT AUTO_INCREMENT PRIMARY KEY,
+    nome_turma VARCHAR(50),
+    faixa_etaria VARCHAR(20),
+    capacidade INT,
+    id_endereco INT,
+    FOREIGN KEY(id_endereco) REFERENCES endereco(id_endereco)
+);
+
+CREATE TABLE professor (
+    id_professor INT AUTO_INCREMENT PRIMARY KEY,
+    nome_professor VARCHAR(60),
+    formacao VARCHAR(80),
+    salario DECIMAL(10,2),
+    data_admissao DATE
+);
+
+CREATE TABLE sala (
+    id_sala INT AUTO_INCREMENT PRIMARY KEY,
+    numero_sala INT,
+    id_turma INT UNIQUE,
+    FOREIGN KEY(id_turma) REFERENCES turma(id_turma)
+);
+
+CREATE TABLE crianca (
+    id_crianca INT AUTO_INCREMENT PRIMARY KEY,
+    nome_crianca VARCHAR(60),
+    data_nascimento DATE,
+    id_turma INT,
+    id_endereco INT,
+    FOREIGN KEY(id_turma) REFERENCES turma(id_turma),
+    FOREIGN KEY(id_endereco) REFERENCES endereco(id_endereco)
+);
+
+CREATE TABLE responsavel (
+    id_responsavel INT AUTO_INCREMENT PRIMARY KEY,
+    nome_responsavel VARCHAR(60),
+    telefone VARCHAR(20),
+    email VARCHAR(60)
+);
+
+CREATE TABLE crianca_responsavel (
+    id_crianca INT,
+    id_responsavel INT,
+    parentesco VARCHAR(30),
+    PRIMARY KEY(id_crianca, id_responsavel),
+    FOREIGN KEY(id_crianca) REFERENCES crianca(id_crianca),
+    FOREIGN KEY(id_responsavel) REFERENCES responsavel(id_responsavel)
+);
+
+CREATE TABLE frequencia (
+    id_frequencia INT AUTO_INCREMENT PRIMARY KEY,
+    id_crianca INT,
+    data DATE,
+    presenca CHAR(1),
+    FOREIGN KEY(id_crianca) REFERENCES crianca(id_crianca)
+);
+
+CREATE TABLE atividade (
+    id_atividade INT AUTO_INCREMENT PRIMARY KEY,
+    nome_atividade VARCHAR(60),
+    descricao VARCHAR(200),
+    dia_semana VARCHAR(15),
+    id_professor INT,
+    FOREIGN KEY(id_professor) REFERENCES professor(id_professor)
+);
+
+CREATE TABLE crianca_atividade (
+    id_crianca INT,
+    id_atividade INT,
+    PRIMARY KEY(id_crianca, id_atividade),
+    FOREIGN KEY(id_crianca) REFERENCES crianca(id_crianca),
+    FOREIGN KEY(id_atividade) REFERENCES atividade(id_atividade)
+);
+
+CREATE TABLE pagamento (
+    id_pagamento INT AUTO_INCREMENT PRIMARY KEY,
+    id_responsavel INT,
+    data_pagamento DATE,
+    valor DECIMAL(10,2),
+    forma_pagamento VARCHAR(20),
+    status_pagamento VARCHAR(20),
+    FOREIGN KEY(id_responsavel) REFERENCES responsavel(id_responsavel)
+);
+
+CREATE TABLE funcionario (
+    id_funcionario INT AUTO_INCREMENT PRIMARY KEY,
+    nome_funcionario VARCHAR(60),
+    cargo VARCHAR(40),
+    salario DECIMAL(10,2),
+    data_admissao DATE
+);
+
+CREATE TABLE alimentacao (
+    id_alimentacao INT AUTO_INCREMENT PRIMARY KEY,
+    id_funcionario INT,
+    tipo_refeicao VARCHAR(30),
+    cardapio VARCHAR(100),
+    data_refeicao DATE,
+    FOREIGN KEY(id_funcionario) REFERENCES funcionario(id_funcionario)
+);
+
+CREATE TABLE saude (
+    id_crianca INT PRIMARY KEY,
+    alergias VARCHAR(100),
+    vacinado VARCHAR(3),
+    plano_saude VARCHAR(60),
+    FOREIGN KEY(id_crianca) REFERENCES crianca(id_crianca)
+);
+
+CREATE TABLE ocorrencia (
+    id_ocorrencia INT AUTO_INCREMENT PRIMARY KEY,
+    id_crianca INT,
+    descricao VARCHAR(200),
+    data_ocorrencia DATE,
+    tipo_ocorrencia VARCHAR(40),
+    FOREIGN KEY(id_crianca) REFERENCES crianca(id_crianca)
+);
+
+-- ENDEREÇOS 
+INSERT INTO endereco (rua, numero, bairro, cidade, estado) VALUES
+('Rua das Flores', '120', 'Centro', 'Recife', 'PE'),
+('Av. Boa Viagem', '555', 'Boa Viagem', 'Recife', 'PE'),
+('Rua da Alegria', '80', 'Cordeiro', 'Recife', 'PE'),
+('Rua Verde', '33', 'Casa Forte', 'Recife', 'PE'),
+('Rua Azul', '101', 'Pina', 'Recife', 'PE'),
+('Rua Gato Preto', '404', 'Graças', 'Recife', 'PE'),
+('Rua Sol', '77', 'Madalena', 'Recife', 'PE'),
+('Av. Lua', '99', 'Derby', 'Recife', 'PE'),
+('Trav. A', '1A', 'Bairrinho', 'Recife', 'PE'),
+('Rua B', '2B', 'Bairrinho', 'Recife', 'PE'),
+('Rua C', '3C', 'Bairrinho', 'Recife', 'PE'),
+('Rua D', '4D', 'Bairrinho', 'Recife', 'PE'),
+('Rua E', '5E', 'Bairrinho', 'Recife', 'PE'),
+('Rua F', '6F', 'Bairrinho', 'Recife', 'PE'),
+('Rua G', '7G', 'Bairrinho', 'Recife', 'PE'),
+('Rua H', '8H', 'Bairrinho', 'Recife', 'PE'),
+('Rua I', '9I', 'Bairrinho', 'Recife', 'PE'),
+('Rua J', '10J', 'Bairrinho', 'Recife', 'PE'),
+('Rua K', '11K', 'Bairrinho', 'Recife', 'PE'),
+('Rua L', '12L', 'Bairrinho', 'Recife', 'PE'),
+('Rua M', '13M', 'Várzea', 'Recife', 'PE'),
+('Rua N', '14N', 'Várzea', 'Recife', 'PE'),
+('Rua O', '15O', 'Várzea', 'Recife', 'PE'),
+('Rua P', '16P', 'Várzea', 'Recife', 'PE'),
+('Rua Q', '17Q', 'Várzea', 'Recife', 'PE'),
+('Rua R', '18R', 'Várzea', 'Recife', 'PE'),
+('Rua S', '19S', 'Várzea', 'Recife', 'PE'),
+('Rua T', '20T', 'Várzea', 'Recife', 'PE'),
+('Rua U', '21U', 'Várzea', 'Recife', 'PE'),
+('Rua V', '22V', 'Várzea', 'Recife', 'PE'),
+('Rua W', '23W', 'Olinda', 'Olinda', 'PE'),
+('Rua X', '24X', 'Olinda', 'Olinda', 'PE'),
+('Rua Y', '25Y', 'Olinda', 'Olinda', 'PE'),
+('Rua Z', '26Z', 'Olinda', 'Olinda', 'PE'),
+('Rua AA', '27A', 'Olinda', 'Olinda', 'PE'),
+('Rua BB', '28B', 'Olinda', 'Olinda', 'PE'),
+('Rua CC', '29C', 'Olinda', 'Olinda', 'PE'),
+('Rua DD', '30D', 'Olinda', 'Olinda', 'PE'),
+('Rua EE', '31E', 'Olinda', 'Olinda', 'PE'),
+('Rua FF', '32F', 'Olinda', 'Olinda', 'PE'),
+('Rua GG', '33G', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua HH', '34H', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua II', '35I', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua JJ', '36J', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua KK', '37K', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua LL', '38L', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua MM', '39M', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua NN', '40N', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua OO', '41O', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua PP', '42P', 'Jaboatão', 'Jaboatão dos Guararapes', 'PE'),
+('Rua QQ', '43Q', 'Caruaru', 'Caruaru', 'PE'),
+('Rua RR', '44R', 'Caruaru', 'Caruaru', 'PE'),
+('Rua SS', '45S', 'Caruaru', 'Caruaru', 'PE'),
+('Rua TT', '46T', 'Caruaru', 'Caruaru', 'PE'),
+('Rua UU', '47U', 'Caruaru', 'Caruaru', 'PE'),
+('Rua VV', '48V', 'Caruaru', 'Caruaru', 'PE'),
+('Rua WW', '49W', 'Caruaru', 'Caruaru', 'PE'),
+('Rua XX', '50X', 'Caruaru', 'Caruaru', 'PE'),
+('Rua YY', '51Y', 'Petrolina', 'Petrolina', 'PE'),
+('Rua ZZ', '52Z', 'Petrolina', 'Petrolina', 'PE'),
+('Rua Alfa', '60', 'São José', 'Recife', 'PE'),
+('Rua Beta', '61', 'Boa Viagem', 'Recife', 'PE'),
+('Rua Gamma', '62', 'Centro', 'Olinda', 'PE'),
+('Rua Delta', '63', 'Pina', 'Recife', 'PE'),
+('Rua Epsilon', '64', 'Jardim', 'Jaboatão', 'PE'),
+('Rua Zeta', '65', 'Cohab', 'Recife', 'PE'),
+('Rua Eta', '66', 'Várzea', 'Recife', 'PE'),
+('Rua Theta', '67', 'Casa Amarela', 'Recife', 'PE'),
+('Rua Iota', '68', 'Madalena', 'Recife', 'PE'),
+('Rua Kappa', '69', 'Aflitos', 'Recife', 'PE');
+
+-- TURMAS
+INSERT INTO turma (nome_turma, faixa_etaria, capacidade, id_endereco) VALUES
+('Maternal I', '2 a 3 anos', 20, 1),
+('Maternal II', '3 a 4 anos', 22, 1),
+('Pré I', '4 a 5 anos', 25, 2),
+('Pré II', '5 a 6 anos', 25, 3),
+('Turma Vazia Teste', '5 a 6 anos', 10, 3);
+
+-- PROFESSORES
+INSERT INTO professor (nome_professor, formacao, salario, data_admissao) VALUES
+('Ana Souza', 'Pedagogia', 3500.00, '2022-01-15'),
+('Carlos Lima', 'Educação Infantil', 3200.00, '2023-02-10'),
+('Fernanda Alves', 'Psicopedagogia', 4000.00, '2021-03-22'),
+('Paulo Mendes', 'Educação Física', 3100.00, '2023-04-05');
+
+-- SALAS
+INSERT INTO sala (numero_sala, id_turma) VALUES
+(101, 1), (102, 2), (201, 3), (202, 4);
+
+-- CRIANÇAS (60 Registros - ID_ENDERECO 1:1)
+INSERT INTO crianca (nome_crianca, data_nascimento, id_turma, id_endereco) VALUES
+('João Pedro', '2020-05-12', 1, 1), ('Maria Luiza', '2019-10-10', 2, 2),
+('Lucas Silva', '2021-01-20', 1, 3), ('Ana Beatriz', '2019-12-15', 3, 4),
+('Gabriel Santos', '2020-03-18', 2, 5), ('Laura Oliveira', '2019-09-02', 4, 6),
+('Pedro Henrique', '2020-07-23', 1, 7), ('Helena Costa', '2019-11-30', 2, 8),
+('Isabella Souza', '2021-02-25', 1, 9), ('Miguel Ferreira', '2019-08-11', 3, 10),
+('Sofia Rocha', '2020-01-15', 1, 11), ('Davi Luiz', '2021-03-10', 2, 12),
+('Manuela Dias', '2019-06-20', 3, 13), ('Arthur Gomes', '2020-09-12', 4, 14),
+('Valentina Paz', '2021-05-05', 1, 15), ('Enzo Gabriel', '2020-04-01', 2, 16),
+('Alice Maria', '2020-05-02', 3, 17), ('Theo Siqueira', '2020-06-03', 4, 18),
+('Heitor Villa', '2020-07-04', 1, 19), ('Gael Machado', '2020-08-05', 2, 20),
+('Bernardo Lima', '2020-09-06', 3, 21), ('Valentina Costa', '2020-10-07', 4, 22),
+('Heloísa Pinto', '2020-11-08', 1, 23), ('Lorenzo Silva', '2020-12-09', 2, 24),
+('Théo Martins', '2021-01-10', 3, 25), ('Pedro Álvares', '2021-02-11', 4, 26),
+('Lívia Andrade', '2021-03-12', 1, 27), ('Lorena Bastos', '2021-04-13', 2, 28),
+('Maria Eduarda', '2021-05-14', 3, 29), ('Yasmin Freitas', '2021-06-15', 4, 30),
+('Lucas Neto', '2021-07-16', 1, 31), ('Felipe Neto', '2021-08-17', 2, 32),
+('Larissa Manoela', '2021-09-18', 3, 33), ('Maisa Silva', '2021-10-19', 4, 34),
+('Klara Castanho', '2021-11-20', 1, 35), ('Mel Maia', '2021-12-21', 2, 36),
+('João Guilherme', '2022-01-22', 3, 37), ('Zéd da Manga', '2022-02-23', 4, 38),
+('Chico Buarque', '2022-03-24', 1, 39), ('Caetano Veloso', '2022-04-25', 2, 40),
+('Gilberto Gil', '2022-05-26', 3, 41), ('Gal Costa', '2022-06-27', 4, 42),
+('Maria Bethânia', '2022-07-28', 1, 43), ('Elis Regina', '2022-08-29', 2, 44),
+('Tom Jobim', '2022-09-30', 3, 45), ('Vinicius Moraes', '2022-10-01', 4, 46),
+('Toquinho Silva', '2022-11-02', 1, 47), ('Jorge Ben', '2022-12-03', 2, 48),
+('Tim Maia', '2023-01-04', 3, 49), ('Rita Lee', '2023-02-05', 4, 50),
+('Zeca Pagodinho', '2021-01-01', 1, 51), ('Alcione Nazareth', '2021-02-01', 2, 52),
+('Martinho Vila', '2021-03-01', 3, 53), ('Paulinho Viola', '2021-04-01', 4, 54),
+('Cartola Silva', '2021-05-01', 1, 55), ('Noel Rosa', '2021-06-01', 2, 56),
+('Adoniran Barbosa', '2021-07-01', 3, 57), ('Cazuza Exagerado', '2021-08-01', 4, 58),
+('Renato Russo', '2021-09-01', 1, 59), ('Cassia Eller', '2021-10-01', 2, 60);
+
+-- RESPONSÁVEIS 
+INSERT INTO responsavel (nome_responsavel, telefone, email) VALUES
+('Carlos Silva', '81999991111', 'carlos@email.com'), ('Mariana Souza', '81999992222', 'mariana@email.com'),
+('Roberto Santos', '81999993333', 'roberto@email.com'), ('Julia Oliveira', '81999994444', 'julia@email.com'),
+('Fernando Costa', '81999995555', 'fernando@email.com'), ('Patricia Lima', '81999996666', 'patricia@email.com'),
+('Ricardo Alves', '81999997777', 'ricardo@email.com'), ('Sonia Rocha', '81999998888', 'sonia@email.com'),
+('Bruno Dias', '81999999999', 'bruno@email.com'), ('Camila Paz', '81988881111', 'camila@email.com'),
+('Renata Ferreira', '81988882222', 'renata@email.com'), ('Felipe Gomes', '81988883333', 'felipe@email.com'),
+('Amanda Luiz', '81988884444', 'amanda@email.com'), ('Diego Beatriz', '81988885555', 'diego@email.com'),
+('Eliane Silva', '81988886666', 'eliane@email.com'), ('Marcos Pai', '81977770001', 'marcos@email.com'),
+('Ana Mãe', '81977770002', 'ana@email.com'), ('Pedro Pai', '81977770003', 'pedro@email.com'),
+('Luiza Mãe', '81977770004', 'luiza@email.com'), ('João Pai', '81977770005', 'joao@email.com'),
+('Maria Mãe', '81977770006', 'maria@email.com'), ('Jose Pai', '81977770007', 'jose@email.com'),
+('Paula Mãe', '81977770008', 'paula@email.com'), ('Antonio Pai', '81977770009', 'antonio@email.com'),
+('Sandra Mãe', '81977770010', 'sandra@email.com'), ('Francisco Pai', '81977770011', 'francisco@email.com'),
+('Teresa Mãe', '81977770012', 'teresa@email.com'), ('Paulo Pai', '81977770013', 'paulo@email.com'),
+('Rita Mãe', '81977770014', 'rita@email.com'), ('Carlos Pai', '81977770015', 'carlos2@email.com'),
+('Beatriz Mãe', '81977770016', 'beatriz@email.com'), ('Lucas Pai', '81977770017', 'lucas@email.com'),
+('Fernanda Mãe', '81977770018', 'fernanda@email.com'), ('Rafael Pai', '81977770019', 'rafael@email.com'),
+('Gabriela Mãe', '81977770020', 'gabriela@email.com'), ('Bruno Pai', '81977770021', 'bruno2@email.com'),
+('Juliana Mãe', '81977770022', 'juliana@email.com'), ('Gustavo Pai', '81977770023', 'gustavo@email.com'),
+('Larissa Mãe', '81977770024', 'larissa@email.com'), ('Daniel Pai', '81977770025', 'daniel@email.com'),
+('Camila Mãe', '81977770026', 'camila2@email.com'), ('Eduardo Pai', '81977770027', 'eduardo@email.com'),
+('Tatiane Mãe', '81977770028', 'tatiane@email.com'), ('Marcelo Pai', '81977770029', 'marcelo@email.com'),
+('Renata Mãe', '81977770030', 'renata2@email.com'), ('Vitor Pai', '81977770031', 'vitor@email.com'),
+('Aline Mãe', '81977770032', 'aline@email.com'), ('Rodrigo Pai', '81977770033', 'rodrigo@email.com'),
+('Monica Mãe', '81977770034', 'monica@email.com'), ('Andre Pai', '81977770035', 'andre@email.com'),
+('Tio Chico', '81999990099', 'chico@email.com'), ('Tio Zé', '81999990098', 'ze@email.com'),
+('Tia Cotinha', '81999990097', 'cotinha@email.com'), ('Tia Nastacia', '81999990096', 'nastacia@email.com'),
+('Tio Barnabé', '81999990095', 'barnabe@email.com'), ('Avó Benta', '81999990094', 'benta@email.com'),
+('Avô Visconde', '81999990093', 'visconde@email.com'), ('Avó Emilia', '81999990092', 'emilia@email.com'),
+('Tio Pedrinho', '81999990091', 'pedrinho@email.com'), ('Tia Narizinho', '81999990090', 'narizinho@email.com');
+
+-- CRIANÇA_RESPONSÁVEL 
+INSERT INTO crianca_responsavel (id_crianca, id_responsavel, parentesco) VALUES
+(1, 1, 'Pai'), (2, 2, 'Mãe'), (3, 3, 'Pai'), (4, 4, 'Mãe'), (5, 5, 'Pai'),
+(6, 6, 'Mãe'), (7, 7, 'Pai'), (8, 8, 'Avó'), (9, 9, 'Pai'), (10, 10, 'Mãe'),
+(11, 11, 'Mãe'), (12, 12, 'Tio'), (13, 13, 'Mãe'), (14, 14, 'Pai'), (15, 15, 'Mãe'),
+(16, 16, 'Pai'), (17, 17, 'Mãe'), (18, 18, 'Pai'), (19, 19, 'Mãe'), (20, 20, 'Pai'),
+(21, 21, 'Mãe'), (22, 22, 'Pai'), (23, 23, 'Mãe'), (24, 24, 'Pai'), (25, 25, 'Mãe'),
+(26, 26, 'Pai'), (27, 27, 'Mãe'), (28, 28, 'Pai'), (29, 29, 'Mãe'), (30, 30, 'Pai'),
+(31, 31, 'Mãe'), (32, 32, 'Pai'), (33, 33, 'Mãe'), (34, 34, 'Pai'), (35, 35, 'Mãe'),
+(36, 36, 'Pai'), (37, 37, 'Mãe'), (38, 38, 'Pai'), (39, 39, 'Mãe'), (40, 40, 'Pai'),
+-- TIOS e AVÓS 
+(41, 51, 'Tio'), (42, 52, 'Tio'), (43, 53, 'Tia'), (44, 54, 'Tia'), (45, 55, 'Tio'),
+(46, 56, 'Avó'), (47, 57, 'Avô'), (48, 58, 'Avó'), (49, 59, 'Tio'), (50, 60, 'Tia'),
+
+(51, 1, 'Pai'), (52, 2, 'Mãe'), (53, 3, 'Pai'), (54, 4, 'Mãe'), (55, 5, 'Pai'),
+(56, 6, 'Mãe'), (57, 7, 'Pai'), (58, 8, 'Avó'), (59, 9, 'Pai'), (60, 10, 'Mãe');
+
+-- FREQUÊNCIA 
+INSERT INTO frequencia (id_crianca, data, presenca) VALUES
+(1, '2024-01-10', 'S'), (2, '2024-01-10', 'S'), (3, '2024-01-10', 'S'), (4, '2024-01-10', 'S'),
+(5, '2024-01-10', 'S'), (6, '2024-01-10', 'S'), (7, '2024-01-10', 'S'), (8, '2024-01-10', 'S'),
+(9, '2024-01-10', 'S'), (10, '2024-01-10', 'S'), (11, '2024-01-10', 'S'), (12, '2024-01-10', 'S'),
+(13, '2024-01-10', 'S'), (14, '2024-01-10', 'S'), (15, '2024-01-10', 'S'), (16, '2024-01-10', 'S'),
+(17, '2024-01-10', 'S'), (18, '2024-01-10', 'S'), (19, '2024-01-10', 'S'), (20, '2024-01-10', 'S'),
+(21, '2024-01-10', 'S'), (22, '2024-01-10', 'S'), (23, '2024-01-10', 'S'), (24, '2024-01-10', 'S'),
+(25, '2024-01-10', 'S'), (26, '2024-01-10', 'S'), (27, '2024-01-10', 'S'), (28, '2024-01-10', 'S'),
+(29, '2024-01-10', 'S'), (30, '2024-01-10', 'S'), (31, '2024-01-10', 'S'), (32, '2024-01-10', 'S'),
+(33, '2024-01-10', 'S'), (34, '2024-01-10', 'S'), (35, '2024-01-10', 'S'), (36, '2024-01-10', 'S'),
+(37, '2024-01-10', 'S'), (38, '2024-01-10', 'S'), (39, '2024-01-10', 'S'), (40, '2024-01-10', 'S'),
+(41, '2024-01-10', 'S'), (42, '2024-01-10', 'S'), (43, '2024-01-10', 'S'), (44, '2024-01-10', 'S'),
+(45, '2024-01-10', 'S'), (46, '2024-01-10', 'S'), (47, '2024-01-10', 'S'), (48, '2024-01-10', 'S'),
+(49, '2024-01-10', 'S'), (50, '2024-01-10', 'S'), (51, '2024-01-10', 'S'), (52, '2024-01-10', 'S'),
+(53, '2024-01-10', 'S'), (54, '2024-01-10', 'S'), (55, '2024-01-10', 'S'), (56, '2024-01-10', 'S'),
+(57, '2024-01-10', 'S'), (58, '2024-01-10', 'S'), (59, '2024-01-10', 'S'), (60, '2024-01-10', 'S'),
+-- Presenças em dias diferentes
+(1, '2024-02-15', 'S'), (2, '2024-02-15', 'S'), (3, '2024-02-15', 'S'), (4, '2024-02-15', 'S'),
+(5, '2024-02-15', 'S'), (6, '2024-02-15', 'S'), (7, '2024-02-15', 'S'), (8, '2024-02-15', 'S');
+
+-- João Pedro (ID 1) falta muito
+INSERT INTO frequencia (id_crianca, data, presenca) VALUES
+(1, '2024-03-01', 'N'), (1, '2024-03-02', 'N'), (1, '2024-03-03', 'N'),
+(1, '2024-03-04', 'N'), (1, '2024-03-05', 'N'),
+-- Outras faltas esporádicas
+(2, '2024-03-01', 'N'), (3, '2024-03-01', 'N'), (4, '2024-03-01', 'N'),
+(10, '2024-03-01', 'N'), (11, '2024-03-01', 'N'), (12, '2024-03-01', 'N');
+
+-- Histórico Antigo (2023)
+INSERT INTO frequencia (id_crianca, data, presenca) VALUES
+(1, '2023-05-01', 'S'), (2, '2023-05-01', 'S'), (3, '2023-05-01', 'S'), (4, '2023-05-01', 'S');
+
+-- ATIVIDADES
+INSERT INTO atividade (nome_atividade, descricao, dia_semana, id_professor) VALUES
+('Música', 'Canto e ritmo', 'Segunda', 1),        
+('Pintura', 'Artes plásticas', 'Terça', 2),       
+('Futebol', 'Esporte no pátio', 'Quarta', 4),
+('Contação de Histórias', 'Literatura', 'Quinta', 3),
+('Dança', 'Expressão corporal', 'Sexta', 1),
+('Inglês', 'Básico', 'Segunda', 2),               
+('Teatro', 'Artes Cênicas', 'Terça', 3);          
+
+-- CRIANÇA_ATIVIDADE
+INSERT INTO crianca_atividade (id_crianca, id_atividade) VALUES
+(1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2),
+(11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2), (18, 2), (19, 2), (20, 2),
+(21, 2), (22, 2), (23, 2), (24, 2), (25, 2), (26, 2), (27, 2), (28, 2), (29, 2), (30, 2),
+(31, 2), (32, 2), (33, 2), (34, 2), (35, 2), (36, 2), (37, 2), (38, 2), (39, 2), (40, 2),
+(41, 2), (42, 2), (43, 2), (44, 2), (45, 2), (46, 2), (47, 2), (48, 2), (49, 2), (50, 2),
+(51, 2), (52, 2), (53, 2), (54, 2), (55, 2), (56, 2), (57, 2), (58, 2), (59, 2), (60, 2),
+-- Alguns na Segunda (Música - ID 1) para Consulta 4
+(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1);
+
+INSERT INTO pagamento (id_responsavel, data_pagamento, valor, forma_pagamento, status_pagamento) VALUES
+(1, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(2, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(3, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(4, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(5, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(6, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(7, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(8, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(9, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(10, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(11, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(12, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(13, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(14, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(15, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(16, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(17, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(18, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(19, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(20, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(21, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(22, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(23, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(24, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(25, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(26, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(27, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(28, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(29, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(30, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(31, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(32, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(33, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(34, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(35, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(36, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(37, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(38, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(39, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(40, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(41, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(42, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(43, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(44, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(45, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(46, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(47, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(48, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(49, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(50, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(51, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(52, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(53, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(54, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(55, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(56, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(57, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(58, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(59, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(60, '2024-02-10', 450.00, 'PIX', 'Pago'),
+(1, '2024-01-05', 400.00, 'PIX', 'Pago'),
+(1, '2024-03-05', 400.00, 'PIX', 'Pago'),
+(3, '2024-03-10', 450.00, 'Cartão', 'Pendente'),
+(60, '2024-01-10', 450.00, 'Boleto', 'Atrasado'),
+(5, '2024-03-10', 100.00, 'Dinheiro', 'Pendente');
+
+-- FUNCIONÁRIOS
+INSERT INTO funcionario (nome_funcionario, cargo, salario, data_admissao) VALUES
+('Dona Benta', 'Cozinheira Chefe', 2200.00, '2020-01-10'),
+('Patrícia Silva', 'Aux. Cozinha', 1500.00, '2024-01-01'),
+('Sr. Barnabé', 'Zelador', 2000.00, '2019-05-15'),
+('Tia Nastácia', 'Auxiliar Limpeza', 1800.00, '2021-08-01');
+
+-- ALIMENTAÇÃO
+INSERT INTO alimentacao (id_funcionario, tipo_refeicao, cardapio, data_refeicao) VALUES
+(1, 'Almoço', 'Arroz, Feijão e Frango', '2024-03-01'),
+(1, 'Lanche', 'Bolo de Cenoura', '2024-03-01'),
+(2, 'Almoço', 'Macarronada', '2024-03-02'),
+(3, 'Lanche', 'Suco', '2024-03-02');
+
+-- SAÚDE 
+INSERT INTO saude (id_crianca, alergias, vacinado, plano_saude) VALUES
+(1, 'Nenhuma', 'Sim', 'Unimed'),
+(2, 'Glúten', 'Sim', 'Hapvida'),
+(3, 'Leite', 'Não', 'SUS'),
+(4, 'Nenhuma', 'Sim', 'Bradesco'),
+(5, 'Amendoim', 'Sim', 'Particular');
+
+-- OCORRÊNCIA 
+INSERT INTO ocorrencia (id_crianca, descricao, data_ocorrencia, tipo_ocorrencia) VALUES
+(1, 'Empurrou o colega', '2024-03-02', 'Disciplina'),
+(3, 'Caiu e ralou o joelho', '2024-03-03', 'Acidente'),
+(5, 'Febre Alta', '2024-08-01', 'Saúde'),
+(6, 'Dor de barriga', '2024-09-15', 'Saúde'),
+(2, 'Gripe', '2024-01-10', 'Saúde');

@@ -1,0 +1,14 @@
+-- 1 | filtra crianças com responsáveis "Tio" como parentesco, ordena por nome da criança e limita a 30 registros
+-- 2 | Mostra registros de presença desde 01/01/2024 e pula os 10 primeiros resultados
+-- 3 | Recupera pagamentos pendentes acima de R$200, com dados do responsável e ordena do mais recente para o mais antigo
+-- 4 | Lista as atividades que ocorrem as segundas e o professor responsável
+-- 5 | Conta as faltas por criança, retorna as com 1 ou mais e ordena pelas que tem mais faltas
+-- 6 | Lista crianças que tem alergia
+-- 7 | Conta quantas crianças há em cada turma, e garante que turmas sem alunos também apareçam
+-- 8 | Calcula a média de valores agrupada por pagamento, retornando apenas as que a média seja maior de 200
+-- 9 (5 JOINS) | Junta criança, sua turma, responsáveis e atividades; filtra por atividades as terças
+-- 10 (5 JOINS) | Relaciona responsáveis, pagamentos, filhos e o endereço da turma. Filtra pagamentos já quitados acima de R$180
+-- 11 | Recupera ocorrências do tipo "Saúde" desde 01/07/2024, ordena por mais recente primeiro
+-- 12 | Lista funcionários da cozinha e os registros de alimentação que assinaram; e encontra cargos como "Cozinheira"
+-- 13 | Soma pagamentos feitos pelos responsáveis no ano de 2024 e retorna apenas os que pagaram mais de R$1000
+-- 14 | Calcula a idade média das crianças, por turma
