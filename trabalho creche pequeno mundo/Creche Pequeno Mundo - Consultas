@@ -7,11 +7,11 @@ INNER JOIN crianca_responsavel
 ON crianca.id_crianca = crianca_responsavel.id_crianca
 INNER JOIN responsavel
 ON responsavel.id_responsavel = crianca_responsavel.id_responsavel
-WHERE crianca_responsavel.parentesco = 'Tio'
+WHERE crianca_responsavel.parentesco <> 'Tio'
 ORDER BY crianca.nome_crianca ASC
 LIMIT 30;
 
--- 2 | Mostra registros de presença desde 01/01/2024 e pula os 10 primeiros resultados
+-- 2 | Mostra registros de presença desde 01/01/2024, limita registros e pula os 10 primeiros resultados
 SELECT *
 FROM frequencia
 INNER JOIN crianca
@@ -20,7 +20,7 @@ WHERE frequencia.presenca = 'S'
 AND frequencia.data >= '2024-01-01'
 LIMIT 50 OFFSET 10;
 
--- 3 | Recupera pagamentos pendentes acima de R$200, com dados do responsável e ordena do mais recente para o mais antigo
+-- 3 | Recupera pagamentos pendentes acima de R$200, com dados do responsável; ordena do mais recente para o mais antigo
 select *
 from pagamento
 inner join responsavel
@@ -29,7 +29,7 @@ where pagamento.status_pagamento = 'Pendente'
 and pagamento.valor > 200
 order by pagamento.data_pagamento desc;
 
--- 4 | Lista as atividades que ocorrem as segundas e o professor responsável
+-- 4 | Lista as atividades que ocorrem as segundas e o professor responsável; limita 20 resultados
 select *
 from atividade
 inner join professor
@@ -37,7 +37,7 @@ on atividade.id_professor = professor.id_professor
 where atividade.dia_semana = 'Segunda'
 limit 20;
 
--- 5 | Conta as faltas por criança, retorna as com 1 ou mais e ordena pelas que tem mais faltas
+-- 5 | Conta as faltas por criança, retorna as com 1 ou mais; ordena pelas que tem mais faltas
 SELECT crianca.nome_crianca, count(frequencia.id_frequencia) as faltas
 FROM crianca
 INNER JOIN frequencia
@@ -47,7 +47,7 @@ GROUP BY crianca.id_crianca
 HAVING faltas > 0
 ORDER BY faltas DESC;
 
--- 6 | Lista crianças que tem alergia
+-- 6 | Lista crianças que tem alergia; ordena por ordem alfabética 
 select *
 from crianca
 inner join saude
@@ -55,7 +55,7 @@ on crianca.id_crianca = saude.id_crianca
 where saude.alergias <> 'Nenhuma'
 order by crianca.nome_crianca;
 
--- 7 | Conta quantas crianças há em cada turma, e garante que turmas sem alunos também apareçam
+-- 7 | Conta quantas crianças há em cada turma, e garante que turmas sem alunos também apareçam; ordena pelo que tiver mais
 select turma.*, count(crianca.id_crianca) as total
 from turma
 left join crianca
@@ -69,7 +69,7 @@ from pagamento
 group by forma_pagamento
 having media > 200;
 
--- 9 (5 JOINS) | Junta criança, sua turma, responsáveis e atividades; filtra por atividades as terças
+-- 9 (5 JOINS) | Junta criança, sua turma, responsáveis e atividades; filtra por atividades as terças; limitando até 40 registros e pulando 5 deles
 select *
 from crianca
 inner join turma
@@ -88,11 +88,16 @@ limit 40 offset 5;
 -- 10 (5 JOINS) | Relaciona responsáveis, pagamentos, filhos e o endereço da turma. Filtra pagamentos já quitados acima de R$180
 SELECT *
 FROM responsavel
-INNER JOIN pagamento ON responsavel.id_responsavel = pagamento.id_responsavel
-INNER JOIN crianca_responsavel ON crianca_responsavel.id_responsavel = responsavel.id_responsavel
-INNER JOIN crianca ON crianca.id_crianca = crianca_responsavel.id_crianca
-INNER JOIN turma ON turma.id_turma = crianca.id_turma
-INNER JOIN endereco ON turma.id_endereco = endereco.id_endereco -- <<< O 5º JOIN
+INNER JOIN pagamento 
+ON responsavel.id_responsavel = pagamento.id_responsavel
+INNER JOIN crianca_responsavel 
+ON crianca_responsavel.id_responsavel = responsavel.id_responsavel
+INNER JOIN crianca 
+ON crianca.id_crianca = crianca_responsavel.id_crianca
+INNER JOIN turma 
+ON turma.id_turma = crianca.id_turma
+INNER JOIN endereco 
+ON turma.id_endereco = endereco.id_endereco -- <<< O 5º JOIN
 WHERE pagamento.status_pagamento = 'Pago'
 AND pagamento.valor > 180
 ORDER BY pagamento.data_pagamento DESC
@@ -107,7 +112,7 @@ where ocorrencia.tipo_ocorrencia = 'Saúde'
 and ocorrencia.data_ocorrencia >= '2024-07-01'
 order by ocorrencia.data_ocorrencia desc;
 
--- 12 | Lista funcionários da cozinha e os registros de alimentação que assinaram; e encontra cargos como "Cozinheira"
+-- 12 | Lista funcionários da cozinha e os registros de alimentação que assinaram; e encontra cargos como "Cozinheira" limita até 40 registros
 SELECT funcionario.*, alimentacao.*
 FROM funcionario
 INNER JOIN alimentacao
@@ -115,7 +120,7 @@ ON funcionario.id_funcionario = alimentacao.id_funcionario
 WHERE funcionario.cargo LIKE '%Cozinh%'
 LIMIT 40;
 
--- 13 | Soma pagamentos feitos pelos responsáveis no ano de 2024 e retorna apenas os que pagaram mais de R$1000
+-- 13 | Soma pagamentos feitos pelos responsáveis no ano de 2024 e retorna apenas os que pagaram mais de R$1000; ordena 
 select responsavel.*, sum(pagamento.valor) as total_pago
 from responsavel
 inner join pagamento
@@ -125,7 +130,7 @@ group by responsavel.id_responsavel
 having total_pago > 1000
 order by total_pago desc;
 
--- 14 | Calcula a idade média das crianças, por turma
+-- 14 | Calcula a idade média das crianças, por turma; ordena da maior média para a menor
 select turma.nome_turma,
 avg(timestampdiff(year, crianca.data_nascimento, curdate())) as media_idade
 from turma
