@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>São João em Arcoverde</title>
+    <link rel="stylesheet" href="assets/CSS/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="app-shell">
+        <header class="app-header">
+            <i data-lucide="menu"></i>
+            <h1>SÃO JOÃO EM ARCOVERDE</h1>
+            <i data-lucide="bell"></i>
+        </header>
+
+        <main class="app-screen-container">
+            
+            <section id="screen-home" class="active-screen">
+                <div class="card-live">
+                    <span class="status-badge">LIVE NOW</span>
+                    <div class="card-info">
+                        <h2>ALCEU VALENÇA</h2>
+                        <p>Polo Multieventos • Até às 00:30</p>
+                        <button class="btn-action">VIEW SCHEDULE <i data-lucide="arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <h3>POPULAR POLOS</h3>
+                </div>
+                
+                <div class="grid-polos">
+                    <div class="grid-item">
+                        <i data-lucide="tent"></i>
+                        <span>Sítio Trindade</span>
+                        <small>Quadrilhas</small>
+                    </div>
+                    <div class="grid-item">
+                        <i data-lucide="utensils"></i>
+                        <span>Pátio de São Pedro</span>
+                        <small>Gastronomia</small>
+                    </div>
+                </div>
+
+                <div class="card-safety">
+                    <div class="safety-header">
+                        <i data-lucide="zap"></i>
+                        <span>SAFETY QUICK TIP</span>
+                    </div>
+                    <p>"Mantenha-se hidratado e identifique as crianças com pulseiras oficiais."</p>
+                    <a href="tel:190" class="emergency-link">EMERGENCY CONTACTS</a>
+                </div>
+            </section>
+
+            <section id="screen-agenda" class="hidden-screen">
+                <h2>Agenda Completa</h2>
+                <p>Conteúdo da agenda aqui...</p>
+            </section>
+            <section id="screen-mapa" class="hidden-screen">
+                <h2>Mapa de Arcoverde</h2>
+                <p>Mapa interativo aqui...</p>
+            </section>
+            <section id="screen-guia" class="hidden-screen">
+                <h2>Guia do Folião</h2>
+                <p>Informações e História...</p>
+            </section>
+        </main>
+
+        <nav class="bottom-navigation">
+            <div class="nav-button active" data-target="screen-home">
+                <i data-lucide="home"></i><span>HOME</span>
+            </div>
+            <div class="nav-button" data-target="screen-home">
+                <i data-lucide="tent"></i><span>POLOS</span>
+            </div>
+            <div class="nav-button" data-target="screen-agenda">
+                <i data-lucide="calendar"></i><span>AGENDA</span>
+            </div>
+            <div class="nav-item-central" data-target="screen-mapa">
+                <i data-lucide="map"></i><span>MAPA</span>
+            </div>
+            <div class="nav-button" data-target="screen-guia">
+                <i data-lucide="shield"></i><span>GUIA</span>
+            </div>
+        </nav>
+    </div>
+
+    <script src="assets/JS/script.js"></script>
+</body>
+</html>
+ 
