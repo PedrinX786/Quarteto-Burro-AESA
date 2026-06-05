@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>São João de Arcoverde</title>
+
+    <!-- PWA: Manifest -->
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- PWA: iOS (Safari não lê o manifest para esses) -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="SJArcoverde" />
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png" />
+
+    <!-- PWA: Cor da barra de status no Android -->
+    <meta name="theme-color" content="#ff9800" />
+
+    <!-- SEO básico -->
+    <meta
+      name="description"
+      content="Guia oficial do São João de Arcoverde 2026 — programação, hospedagem, alimentação, transporte e muito mais."
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Ícones Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- HOME -->
+    <section class="home" id="home">
+      <div class="overlay"></div>
+
+      <div class="conteudo-home">
+        <h1>São João de Arcoverde 2026</h1>
+
+        <p class="data">
+          <i class="fa-solid fa-calendar"></i>
+          13 a 28 de Junho
+        </p>
+
+        <p class="descricao">
+          Viva a tradição, o forró e a cultura nordestina.
+        </p>
+
+        <button id="btnInformacoes">Informações sobre o São João</button>
+      </div>
+    </section>
+
+    <!-- APP -->
+    <section class="app escondido" id="app">
+      <!-- Cabeçalho -->
+      <header class="topo">
+        <button id="abrirMenu" class="btn-menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h2>São João de Arcoverde</h2>
+      </header>
+
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <div class="fechar-sidebar" id="fecharSidebar">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+
+        <div class="itens-sidebar">
+          <button class="item-sidebar" id="btnHomeSidebar">
+            <i class="fa-solid fa-house"></i>
+            Home
+          </button>
+
+          <button class="item-sidebar" data-aba="arcoverde">
+            <i class="fa-solid fa-city"></i>
+            Arcoverde
+          </button>
+
+          <button class="item-sidebar" data-aba="seguranca">
+            <i class="fa-solid fa-shield-halved"></i>
+            Sua Segurança
+          </button>
+
+          <button class="item-sidebar" data-aba="patrocinadores">
+            <i class="fa-solid fa-handshake"></i>
+            Patrocinadores
+          </button>
+
+          <button class="item-sidebar" data-aba="creditos">
+            <i class="fa-solid fa-users"></i>
+            Créditos
+          </button>
+        </div>
+      </div>
+
+      <!-- Conteúdo das Abas -->
+      <main class="conteudo-app">
+        <!-- Aba: Programação -->
+        <section class="aba" id="programacao">
+          <h1>Programação Oficial</h1>
+          <p class="subtitulo">Confira aqui nossas atrações</p>
+          <div class="datas" id="datas"></div>
+          <div class="eventos" id="eventos"></div>
+        </section>
+
+        <!-- Aba: Hospedagem -->
+        <section class="aba escondido" id="hospedagem">
+          <h1>Hospedagem</h1>
+          <p class="subtitulo">Encontre hotéis e pousadas</p>
+          <div class="lista-cards" id="listaHospedagem"></div>
+        </section>
+
+        <!-- Aba: Alimentação -->
+        <section class="aba escondido" id="alimentacao">
+          <h1>Alimentação</h1>
+          <p class="subtitulo">Conheça alguns locais para comer e curtir</p>
+
+          <div class="categorias-alimentacao">
+            <button
+              class="categoria-btn ativo-categoria"
+              data-categoria="pizzarias"
+            >
+              🍕 Pizzarias
+            </button>
+            <button class="categoria-btn" data-categoria="bares">
+              🍻 Bares
+            </button>
+            <button class="categoria-btn" data-categoria="restaurantes">
+              🍽️ Restaurantes
+            </button>
+          </div>
+
+          <div class="lista-cards" id="listaAlimentacao"></div>
+        </section>
+
+        <!-- Aba: Transporte -->
+        <section class="aba escondido" id="transporte">
+          <h1>Transporte</h1>
+          <p class="subtitulo">
+            Encontre opções de transporte durante o evento
+          </p>
+
+          <div class="mapa-transporte">
+            <img
+              src="assets/img/mapa-mototaxi.jpeg"
+              alt="Mapa de pontos de mototáxi"
+            />
+          </div>
+
+          <h2 class="titulo-secao">Mototaxistas</h2>
+          <div class="lista-cards" id="listaMoto"></div>
+
+          <h2 class="titulo-secao">Taxistas</h2>
+          <div class="lista-cards" id="listaTaxi"></div>
+        </section>
+
+        <!-- Aba: Mapa -->
+        <section class="aba escondido" id="mapa">
+          <h1>Mapa do Evento</h1>
+          <p class="subtitulo">Confira os polos e pontos importantes</p>
+          <div class="lista-mapas" id="listaMapas"></div>
+        </section>
+
+        <!-- Aba: Segurança (sidebar) -->
+        <section class="aba escondido" id="seguranca">
+          <h1>Sua Segurança</h1>
+          <p class="subtitulo">Contatos importantes e dicas úteis</p>
+          <div class="lista-cards" id="listaSeguranca"></div>
+
+          <div class="dicas-seguranca">
+            <h2>Dicas de Segurança</h2>
+            <ul>
+              <li>Se beber, não dirija.</li>
+              <li>Mantenha-se hidratado.</li>
+              <li>Evite locais escuros e isolados.</li>
+              <li>Cuide dos seus objetos pessoais.</li>
+              <li>Em emergências, procure apoio policial.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Aba: Patrocinadores (sidebar) -->
+        <section class="aba escondido" id="patrocinadores">
+          <h1>Patrocinadores</h1>
+          <p class="subtitulo">Empresas e apoiadores do evento</p>
+          <div class="lista-cards" id="listaPatrocinadores"></div>
+        </section>
+
+        <!-- Aba: Créditos (sidebar) -->
+        <section class="aba escondido" id="creditos">
+          <h1>Créditos</h1>
+          <p class="subtitulo">Sobre o desenvolvimento do projeto</p>
+
+          <div class="card-creditos">
+            <h2>Projeto Acadêmico</h2>
+            <p>
+              Este aplicativo foi desenvolvido como projeto do curso de Análise
+              e Desenvolvimento de Sistemas da AESA-CESA.
+            </p>
+
+            <h2>Equipe</h2>
+            <p>Emanuel Gouveia, José Gilmar, Pedro Rangel e Victor Barbosa.</p>
+
+            <h2>Objetivo</h2>
+            <p>
+              Facilitar o acesso às informações do São João de Arcoverde,
+              ajudando turistas e moradores.
+            </p>
+
+            <h2>Agradecimentos</h2>
+            <p>Professor Will...</p>
+          </div>
+        </section>
+
+        <!-- Aba: Arcoverde (sidebar) -->
+        <section class="aba escondido" id="arcoverde">
+          <h1>Arcoverde</h1>
+          <p class="subtitulo">Conheça a Rainha do Sertão</p>
+          <div id="textoArcoverde"></div>
+
+          <h2 class="titulo-secao" style="margin-top: 35px">
+            Pontos Turísticos
+          </h2>
+          <div class="lista-cards" id="listaPontos"></div>
+        </section>
+      </main>
+
+      <!-- Menu Inferior -->
+      <nav class="menu-inferior">
+        <button class="menu-btn ativo" data-aba="programacao">
+          <i class="fa-solid fa-music"></i>
+          <span>Programação</span>
+        </button>
+        <button class="menu-btn" data-aba="hospedagem">
+          <i class="fa-solid fa-bed"></i>
+          <span>Hospedagem</span>
+        </button>
+        <button class="menu-btn" data-aba="alimentacao">
+          <i class="fa-solid fa-utensils"></i>
+          <span>Alimentação</span>
+        </button>
+        <button class="menu-btn" data-aba="transporte">
+          <i class="fa-solid fa-car"></i>
+          <span>Transporte</span>
+        </button>
+        <button class="menu-btn" data-aba="mapa">
+          <i class="fa-solid fa-map"></i>
+          <span>Mapa</span>
+        </button>
+      </nav>
+    </section>
+
+    <!-- JavaScript -->
+    <script src="assets/js/script.js"></script>
+
+    <!-- PWA: Registro do Service Worker -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(function (registration) {
+              console.log(
+                "Service Worker registrado com sucesso:",
+                registration.scope,
+              );
+            })
+            .catch(function (erro) {
+              console.error("Falha ao registrar o Service Worker:", erro);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
