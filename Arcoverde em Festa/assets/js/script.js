@@ -169,13 +169,6 @@ const alimentacao = {
       instagram: "https://www.instagram.com/pizzariaflordohorizonte/",
       imagem: "assets/img/pizza2.jpg",
     },
-    {
-      nome: "Pizzaria Flor do Horizonte",
-      endereco: "Av. José Bonifácio, 745 - São Cristóvão, Arcoverde",
-      telefone: "5587991054927",
-      instagram: "https://www.instagram.com/pizzariaflordohorizonte/",
-      imagem: "assets/img/pizza2.jpg",
-    },
   ],
   bares: [
     {
