@@ -609,3 +609,56 @@ body {
 .texto-arcoverde p:last-child {
   margin-bottom: 0;
 }
+
+/* Barra de Pesquisa */
+
+.barra-pesquisa {
+  margin: 15px 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--borda-suave);
+
+  border-radius: 14px;
+  padding: 14px 16px;
+
+  backdrop-filter: blur(8px);
+}
+
+.barra-pesquisa i {
+  color: var(--cor-principal);
+  font-size: 18px;
+}
+
+.barra-pesquisa input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  color: white;
+  font-size: 15px;
+}
+
+.barra-pesquisa input::placeholder {
+  color: #ccc;
+}
+
+
+.resultado-encontrado {
+  border: 2px solid #ff9800 !important;
+  box-shadow: 0 0 20px rgba(255, 152, 0, 0.7);
+  animation: pulsarResultado 1s infinite alternate;
+}
+
+@keyframes pulsarResultado {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.02);
+  }
+}
