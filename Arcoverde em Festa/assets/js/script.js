@@ -169,6 +169,13 @@ const alimentacao = {
       instagram: "https://www.instagram.com/pizzariaflordohorizonte/",
       imagem: "assets/img/pizza2.jpg",
     },
+    {
+      nome: "Pizzaria Flor do Horizonte",
+      endereco: "Av. José Bonifácio, 745 - São Cristóvão, Arcoverde",
+      telefone: "5587991054927",
+      instagram: "https://www.instagram.com/pizzariaflordohorizonte/",
+      imagem: "assets/img/pizza2.jpg",
+    },
   ],
   bares: [
     {
@@ -649,3 +656,171 @@ pontosTuristicos.forEach(function (ponto) {
 
   listaPontos.appendChild(card);
 });
+
+const campoPesquisa = document.getElementById("campoPesquisa");
+
+campoPesquisa.addEventListener("input", pesquisarGlobal);
+
+function pesquisarGlobal() {
+  const termo = campoPesquisa.value.toLowerCase().trim();
+
+  document.querySelectorAll(".resultado-encontrado").forEach((el) => {
+    el.classList.remove("resultado-encontrado");
+  });
+
+  if (!termo) return;
+
+  // ===== PROGRAMAÇÃO =====
+
+  for (const data in programacao) {
+    const encontrou = programacao[data].find((evento) =>
+      (
+        evento.atracao +
+        " " +
+        evento.polo +
+        " " +
+        evento.horario
+      )
+        .toLowerCase()
+        .includes(termo)
+    );
+
+    if (encontrou) {
+      mostrarAba("programacao");
+
+      document.querySelectorAll(".card-data").forEach((card) => {
+        card.classList.remove("ativa");
+
+        if (card.textContent.includes(data)) {
+          card.classList.add("ativa");
+        }
+      });
+
+      mostrarEventos(data);
+
+      setTimeout(() => {
+        document.querySelectorAll(".card-evento").forEach((card) => {
+          if (card.textContent.toLowerCase().includes(termo)) {
+            card.classList.add("resultado-encontrado");
+
+            card.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
+        });
+      }, 50);
+
+      return;
+    }
+  }
+
+  // ===== HOSPEDAGEM =====
+
+  const hotel = hospedagens.find((item) =>
+    JSON.stringify(item).toLowerCase().includes(termo)
+  );
+
+  if (hotel) {
+    mostrarAba("hospedagem");
+
+    setTimeout(() => {
+      document.querySelectorAll("#listaHospedagem .card").forEach((card) => {
+        if (card.textContent.toLowerCase().includes(termo)) {
+          card.classList.add("resultado-encontrado");
+          card.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      });
+    }, 50);
+
+    return;
+  }
+
+  // ===== ALIMENTAÇÃO =====
+
+  for (const categoria in alimentacao) {
+    const encontrou = alimentacao[categoria].find((item) =>
+      JSON.stringify(item).toLowerCase().includes(termo)
+    );
+
+    if (encontrou) {
+      mostrarAba("alimentacao");
+
+      document.querySelectorAll(".categoria-btn").forEach((btn) => {
+        btn.classList.remove("ativo-categoria");
+
+        if (btn.dataset.categoria === categoria) {
+          btn.classList.add("ativo-categoria");
+        }
+      });
+
+      mostrarCategoria(categoria);
+
+      setTimeout(() => {
+        document.querySelectorAll("#listaAlimentacao .card").forEach((card) => {
+          if (card.textContent.toLowerCase().includes(termo)) {
+            card.classList.add("resultado-encontrado");
+
+            card.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
+        });
+      }, 50);
+
+      return;
+    }
+  }
+
+  // ===== SEGURANÇA =====
+
+  const contato = contatosSeguranca.find((item) =>
+    JSON.stringify(item).toLowerCase().includes(termo)
+  );
+
+  if (contato) {
+    mostrarAba("seguranca");
+
+    setTimeout(() => {
+      document.querySelectorAll(".card-seguranca").forEach((card) => {
+        if (card.textContent.toLowerCase().includes(termo)) {
+          card.classList.add("resultado-encontrado");
+
+          card.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      });
+    }, 50);
+
+    return;
+  }
+
+  // ===== PONTOS TURÍSTICOS =====
+
+  const ponto = pontosTuristicos.find((item) =>
+    JSON.stringify(item).toLowerCase().includes(termo)
+  );
+
+  if (ponto) {
+    mostrarAba("arcoverde");
+
+    setTimeout(() => {
+      document.querySelectorAll("#listaPontos .card").forEach((card) => {
+        if (card.textContent.toLowerCase().includes(termo)) {
+          card.classList.add("resultado-encontrado");
+
+          card.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      });
+    }, 50);
+  }
+}
