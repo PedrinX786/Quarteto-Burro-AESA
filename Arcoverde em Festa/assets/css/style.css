@@ -35,7 +35,7 @@ body {
   max-height: 932px;
 
   /* SUBSTITUA pela imagem definitiva de fundo da home */
-  background-image: url("../img/fundo.jpg");
+  background-image: url("../img/fundo.webp");
   background-size: cover;
   background-position: center;
 
@@ -105,7 +105,7 @@ body {
   max-height: 932px;
 
   /* SUBSTITUA pela imagem definitiva de fundo do app */
-  background-image: url("../img/fundo2.png");
+  background-image: url("../img/fundo2.webp");
   background-size: cover;
   background-position: center;
 
@@ -327,18 +327,44 @@ body {
   color: var(--cor-principal);
 }
 
-/* Linha de atração (horário + nome) */
+/* Linha de atração (Horário + Atração à esquerda, Imagem à direita) */
 .item-evento {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
   border-bottom: 1px solid var(--borda-suave);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
+}
+
+/* Organiza o horário em cima e o nome da atração embaixo */
+.detalhes-evento {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1; /* Ocupa o máximo de espaço horizontal antes da imagem */
 }
 
 .horario {
   font-weight: bold;
   color: #ffd166;
+  font-size: 14px;
+}
+
+.atracao {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Imagem da atração encaixada ao lado */
+.img-evento {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0; /* Impede que a imagem amasse em telas menores */
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Cards reutilizáveis
@@ -608,6 +634,53 @@ body {
 /* Remove a margem do último parágrafo */
 .texto-arcoverde p:last-child {
   margin-bottom: 0;
+}
+
+/* Container que agrupa toda a lista de equipe */
+.container-equipe {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 15px;
+}
+
+/* Bloco individual de cada integrante */
+.item-membro-equipe {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(255, 255, 255, 0.05); /* Um fundo levemente visível */
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--borda-suave);
+}
+
+/* Foto redonda estilizada do integrante */
+.foto-membro {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%; /* Deixa a imagem redonda */
+  object-fit: cover;
+  border: 2px solid var(--cor-principal); /* Borda com a cor laranja do app */
+  flex-shrink: 0; /* Impede que a foto amasse em telas muito pequenas */
+}
+
+/* Alinhamento dos textos (Nome em cima, função embaixo) */
+.infos-membro {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nome-membro {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.funcao-membro {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
 }
 
 /* Barra de Pesquisa */

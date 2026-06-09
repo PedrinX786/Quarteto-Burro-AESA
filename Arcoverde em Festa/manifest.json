@@ -12,29 +12,29 @@
   "categories": ["entertainment", "travel", "lifestyle"],
   "icons": [
     {
-      "src": "assets/icons/icon-96x96.png",
+      "src": "assets/icons/icon-96x96.webp",
       "sizes": "96x96",
-      "type": "image/png",
+      "type": "image/webp",
       "purpose": "any"
     },
     {
-      "src": "assets/icons/icon-192x192.png",
+      "src": "assets/icons/icon-192x192.webp",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/webp",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/icons/icon-512x512.png",
+      "src": "assets/icons/icon-512x512.webp",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/webp",
       "purpose": "any maskable"
     }
   ],
   "screenshots": [
     {
-      "src": "assets/img/fundo.jpg",
+      "src": "assets/img/fundo.webp",
       "sizes": "430x932",
-      "type": "image/jpeg",
+      "type": "image/webp",
       "form_factor": "narrow",
       "label": "Tela inicial do São João de Arcoverde"
     }
@@ -45,14 +45,14 @@
       "short_name": "Prog.",
       "description": "Veja a programação do evento",
       "url": "/sjoao-arcoverde/index.html#programacao",
-      "icons": [{ "src": "assets/icons/icon-96x96.png", "sizes": "96x96" }]
+      "icons": [{ "src": "assets/icons/icon-96x96.webp", "sizes": "96x96" }]
     },
     {
       "name": "Mapa",
       "short_name": "Mapa",
       "description": "Veja o mapa do evento",
       "url": "/sjoao-arcoverde/index.html#mapa",
-      "icons": [{ "src": "assets/icons/icon-96x96.png", "sizes": "96x96" }]
+      "icons": [{ "src": "assets/icons/icon-96x96.webp", "sizes": "96x96" }]
     }
   ]
 }
